@@ -1,0 +1,39 @@
+@startuml
+left to right direction
+actor "Сотрудник склада" as employee
+actor "Система склада" as WarehouseSystem
+rectangle "Информационная система склада" {
+  usecase "Проверка наличия свободного места на складе" as PlaceCheck
+  usecase "Указание типа и кол-ва поступающих товаров" as TypeQuantityComing
+  usecase "Указание типа и кол-ва уходящих товаров" as TypeQuantityExit
+  usecase "Указание типа и кол-ва списывающихся товаров" as TypeQuantityOff
+  usecase "Проверка наличия товаров" as ProductCheck 
+  usecase "Создание записи о товаре и назначение места хранения" as RecordComing
+  usecase "Создание записи об уходе товаров" as RecordExit
+  usecase "Создание записи о списании товаров" as RecordOff
+  usecase "Обновление данных в базе" as Update 
+
+  employee ---- TypeQuantityComing
+  employee ---- TypeQuantityExit
+  employee ---- TypeQuantityOff
+
+  WarehouseSystem ---- PlaceCheck
+  WarehouseSystem ---- ProductCheck
+  WarehouseSystem ---- RecordComing
+  WarehouseSystem ---- RecordExit
+  WarehouseSystem ---- RecordOff
+  WarehouseSystem --> Update
+
+  TypeQuantityComing --> PlaceCheck
+  PlaceCheck .-> RecordComing
+  RecordComing --> Update
+
+  TypeQuantityExit --> ProductCheck
+  ProductCheck .-> RecordExit
+  RecordExit --> Update
+  
+  TypeQuantityOff --> ProductCheck
+  ProductCheck .-> RecordOff
+  RecordOff --> Update
+}
+@enduml
