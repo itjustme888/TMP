@@ -1,0 +1,6 @@
+@startuml
+class Warehouse
+Warehouse --* Item
+class Storage
+Storage --* Item
+@enduml
